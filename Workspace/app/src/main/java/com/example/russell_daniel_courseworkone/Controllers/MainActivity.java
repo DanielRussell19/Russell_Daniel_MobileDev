@@ -3,8 +3,9 @@ package com.example.russell_daniel_courseworkone.Controllers;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.example.russell_daniel_courseworkone.Models.Reading;
 import com.example.russell_daniel_courseworkone.Models.ThreadedTask;
 import com.example.russell_daniel_courseworkone.R;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private ScrollView test;
+    private LinearLayout test;
     private List<Reading> result;
 
     @Override
@@ -20,10 +21,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //test = (ScrollView) findViewById(R.id.test);
+        test = (LinearLayout) findViewById(R.id.test);
 
         XmlParser xp = new XmlParser();
         result = xp.getXML();
+
+        for(Reading x: result){
+            TextView t = new TextView(this);
+            t.setText(x.getPubdate());
+            test.addView(t);
+        }
     }
 }
 
