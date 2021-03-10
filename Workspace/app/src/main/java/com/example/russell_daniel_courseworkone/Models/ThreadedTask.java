@@ -11,14 +11,14 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-//The all in one method for getting the XML, parsing and processing the required fields into objects for the result array list
+//Daniel Russell S1707149
+//The all in one method for getting the XML, parsing and processing the required fields into objects to be retrieved via getResult
 public class ThreadedTask extends Thread
 {
     private List<Reading> result; //output result of XML processed into Reading objects
     private Object lock; //lock object used for async execution, object set identical to mainactivity to notify thread
 
     public List<Reading> getResult(){ return result; } //Getter Result
-
     public void setLock(Object lock){ this.lock = lock; } //Setter Lock
 
     @Override

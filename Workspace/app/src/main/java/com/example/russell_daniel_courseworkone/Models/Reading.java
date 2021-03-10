@@ -1,5 +1,7 @@
 package com.example.russell_daniel_courseworkone.Models;
 
+//Daniel Russell S1707149
+//Class used to define Reading objects
 public class Reading {
     private String title, description, link, pubdate, category,lat,lon;
     public String getTitle() {

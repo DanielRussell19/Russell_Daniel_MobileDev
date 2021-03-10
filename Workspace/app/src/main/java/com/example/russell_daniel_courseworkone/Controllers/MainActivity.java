@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import com.example.russell_daniel_courseworkone.Models.Reading;
 import com.example.russell_daniel_courseworkone.Models.ThreadedTask;
+import com.example.russell_daniel_courseworkone.Models.XmlParser;
 import com.example.russell_daniel_courseworkone.R;
 import java.util.List;
 
+//Daniel Russell S1707149
+//Controller used to handle MainActivity
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout test;
@@ -31,38 +34,5 @@ public class MainActivity extends AppCompatActivity {
             t.setText(x.getPubdate());
             test.addView(t);
         }
-    }
-}
-
-class XmlParser
-{
-    private List<Reading> result;
-    private Object lock = new Object();
-
-    public List<Reading> getXML() //XmlParser Start
-    {
-        try
-        {
-            synchronized (lock){
-                ThreadedTask tsk = new ThreadedTask();
-                tsk.setLock(lock);
-
-                tsk.start(); //Starts the method responsible for getting the XML and parsing on a separate thread
-
-                if(tsk.isAlive()){
-                    lock.wait();
-                }
-
-                result = tsk.getResult();
-            }
-
-            return result;
-        }
-        catch (Exception e)
-        {
-            Log.println(Log.ERROR, "GetXMLInit", e.toString());
-        }
-
-        return null;
     }
 }
