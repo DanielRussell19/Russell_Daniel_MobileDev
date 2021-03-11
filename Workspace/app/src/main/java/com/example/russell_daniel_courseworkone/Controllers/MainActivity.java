@@ -1,8 +1,11 @@
 package com.example.russell_daniel_courseworkone.Controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,5 +37,11 @@ public class MainActivity extends AppCompatActivity {
             t.setText(x.getPubdate());
             test.addView(t);
         }
+    }
+
+    public void SwitchMap(View view){
+        Intent mainSwitch = new Intent(MainActivity.this, MapActivity.class);
+        MainActivity.this.startActivity(mainSwitch);
+        MainActivity.this.finish();
     }
 }

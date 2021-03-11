@@ -14,6 +14,6 @@ public class DetailedReadingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detailed_reading);
+        setContentView(R.layout.activity_detailed_reading);
     }
 }
