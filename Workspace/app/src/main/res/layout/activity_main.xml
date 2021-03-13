@@ -10,12 +10,17 @@
     tools:context=".Controllers.MainActivity">
 
     <FrameLayout
+        android:id="@+id/fragNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
         android:id="@+id/fragReadListing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <FrameLayout
-        android:id="@+id/fragNavBar"
+        android:id="@+id/fragBotNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
