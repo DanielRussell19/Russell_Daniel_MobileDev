@@ -1,47 +1,36 @@
 package com.example.russell_daniel_courseworkone.Controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.example.russell_daniel_courseworkone.Models.Reading;
-import com.example.russell_daniel_courseworkone.Models.ThreadedTask;
-import com.example.russell_daniel_courseworkone.Models.XmlParser;
+import com.example.russell_daniel_courseworkone.Fragments.NavActionBar;
+import com.example.russell_daniel_courseworkone.Fragments.ReadingListing;
 import com.example.russell_daniel_courseworkone.R;
-import java.util.List;
 
 //Daniel Russell S1707149
 //Controller used to handle MainActivity
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout test;
-    private List<Reading> result;
+    private NavActionBar FragNavBar;
+    private ReadingListing FragReadingListing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        test = (LinearLayout) findViewById(R.id.test);
+        FragReadingListing = new ReadingListing();
+        FragNavBar = new NavActionBar();
 
-        XmlParser xp = new XmlParser();
-        result = xp.getXML();
+        FragmentManager manageListing = getSupportFragmentManager();
+        FragmentTransaction transactionA = manageListing.beginTransaction();
+        transactionA.replace(R.id.fragReadListing, FragReadingListing);
+        transactionA.commit();
 
-        for(Reading x: result){
-            TextView t = new TextView(this);
-            t.setText(x.getPubdate());
-            test.addView(t);
-        }
-    }
-
-    public void SwitchMap(View view){
-        Intent mainSwitch = new Intent(MainActivity.this, MapActivity.class);
-        MainActivity.this.startActivity(mainSwitch);
-        MainActivity.this.finish();
+        FragmentManager manageNavBar = getSupportFragmentManager();
+        FragmentTransaction transactionB = manageNavBar.beginTransaction();
+        transactionB.replace(R.id.fragNavBar, FragNavBar);
+        transactionB.commit();
     }
 }

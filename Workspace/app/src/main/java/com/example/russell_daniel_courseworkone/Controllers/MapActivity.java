@@ -14,9 +14,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 //Daniel Russell S1707149
 //Controller used to handle MainActivity
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+//public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    List<Reading> readings;
+/*    List<Reading> readings;
     private GoogleMap mMap;
 
     @Override
@@ -39,5 +39,5 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .position(sydney)
                 .title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
-}
+    }*/
+//}

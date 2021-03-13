@@ -1,58 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- Daniel Russell S1707149
-Controller used to handle MainActivity -->
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Daniel Russell S1707149 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tblMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controllers.MainActivity"
-    android:id="@+id/tblMain">
+    android:orientation="vertical"
+    tools:context=".Controllers.MainActivity">
 
-    <TableRow android:id="@+id/rowHeader" android:layout_height="match_parent" android:layout_width="match_parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World!" android:onClick="SwitchMap"/>
-
-    </TableRow>
-
-    <ScrollView
+    <FrameLayout
+        android:id="@+id/fragReadListing"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scrollbarStyle="insideOverlay"
-        >
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/test">
-        </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    </ScrollView>
-
-    <TableRow android:id="@+id/rowFooter" android:layout_height="match_parent" android:layout_width="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </TableRow>
-
-</TableLayout>
+</LinearLayout>
