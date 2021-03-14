@@ -31,17 +31,7 @@ public class ReadingListing extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_readinglisting, container, false);
 
-        test = (LinearLayout) v.findViewById(R.id.test);
-
-        List<Reading> result;
-        XmlParser xp = new XmlParser();
-        result = xp.getXML();
-
-        for(Reading x: result){
-            TextView t = new TextView(v.getContext());
-            t.setText(x.getPubdate());
-            test.addView(t);
-        }
+        getReading(v);
 
         return v;
     }
@@ -55,6 +45,20 @@ public class ReadingListing extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+    }
+
+    public void getReading(View v){
+        test = (LinearLayout) v.findViewById(R.id.test);
+
+        List<Reading> result;
+        XmlParser xp = new XmlParser();
+        result = xp.getXML();
+
+        for(Reading x: result){
+            TextView t = new TextView(v.getContext());
+            t.setText(x.getPubdate());
+            test.addView(t);
+        }
     }
 
 }

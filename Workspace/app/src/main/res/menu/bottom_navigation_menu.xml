@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:itemBackground="@android:color/white"
+    app:itemIconTint="@android:color/white"
+    app:itemTextColor="@android:color/white">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/pgListing"
         android:enabled="true"
-        android:title="ext_label_1"/>
+        android:title="Listing"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/pgMap"
         android:enabled="true"
-        android:title="text_label_2"/>
+        android:title="Map"/>
 </menu>

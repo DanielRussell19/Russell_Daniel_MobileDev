@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Daniel Russell S1707149-->
 <!-- android:theme="@style/Theme.Russell_Daniel_CourseWorkOne" -->
+<!-- @style/Theme.AppCompat.Light.NoActionBar" -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.russell_daniel_courseworkone">
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -13,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />

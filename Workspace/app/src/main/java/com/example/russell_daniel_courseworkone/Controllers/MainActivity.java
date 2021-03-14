@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         transactionB.commit();
 
         FragmentManager manageBotNavBar = getSupportFragmentManager();
-        FragmentTransaction transactionC = manageNavBar.beginTransaction();
+        FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
         transactionC.replace(R.id.fragBotNav, FragBotNavBar);
         transactionC.commit();
     }
