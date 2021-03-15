@@ -3,7 +3,7 @@ package com.example.russell_daniel_courseworkone.Models;
 //Daniel Russell S1707149
 //Class used to define Reading objects
 public class Reading {
-    private String title, description, link, pubdate, category,lat,lon;
+    private String title, description, link, pubdate, category,lat,lon, depth, magnitude;
     public String getTitle() {
         return title;
     }
@@ -19,6 +19,14 @@ public class Reading {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getDepth() { return depth; }
+
+    public void setDepth(String depth) {this.depth = depth;}
+
+    public String getMagnitude() { return magnitude; }
+
+    public void setMagnitude(String magnitude) {this.magnitude = magnitude;}
 
     public String getLink() {
         return link;

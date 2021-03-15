@@ -15,6 +15,8 @@ import com.example.russell_daniel_courseworkone.Models.XmlParser;
 import com.example.russell_daniel_courseworkone.R;
 import java.util.List;
 
+//Daniel Russell S1707149
+//Class used to execute the Threaded Task as a new thread
 public class ReadingListing extends Fragment implements View.OnClickListener {
 
     private TextView Title;
@@ -56,9 +58,25 @@ public class ReadingListing extends Fragment implements View.OnClickListener {
 
         for(Reading x: result){
             TextView t = new TextView(v.getContext());
-            t.setText(x.getPubdate());
+            t.setText(x.getDescription());
             test.addView(t);
         }
+    }
+
+    public void sortMagnitude(){
+
+    }
+
+    public void sortDeepest(){
+
+    }
+
+    public void sortShallowest(){
+
+    }
+
+    public void sortDirection(){
+
     }
 
 }
