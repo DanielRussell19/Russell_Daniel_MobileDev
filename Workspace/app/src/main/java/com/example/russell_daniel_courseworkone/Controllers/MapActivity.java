@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.russell_daniel_courseworkone.Fragments.BottomNavBar;
 import com.example.russell_daniel_courseworkone.Fragments.TopActionBar;
 import com.example.russell_daniel_courseworkone.Models.Reading;
+import com.example.russell_daniel_courseworkone.Models.XmlParser;
 import com.example.russell_daniel_courseworkone.R;
 import java.util.List;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,12 +53,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        XmlParser xp = new XmlParser();
+        readings = xp.getXML();
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        for(Reading x: readings){
+            LatLng pos = new LatLng(Double.parseDouble(x.getLat()), Double.parseDouble(x.getLon()));
+            mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()));
+        }
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Double.parseDouble(readings.get(0).getLat()), Double.parseDouble(readings.get(0).getLon()))));
     }
 }

@@ -62,6 +62,8 @@ public class ThreadedTask extends Thread
                     if(propCount > 6){
                         result.add(reading);
                         propCount = 0;
+                        reading.extractMagnitude();
+                        reading.extractDepth();
                         reading = new Reading();
                         reading.setTitle(temp.get(i).toString());
                     }

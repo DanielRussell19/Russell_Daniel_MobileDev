@@ -67,4 +67,14 @@ public class Reading {
     public void setLon(String lon) {
         this.lon = lon;
     }
+
+    public void extractDepth(){
+        String t = getDescription().substring(getDescription().indexOf("Depth:") + 6, getDescription().indexOf("km"));
+        setDepth(t);
+    }
+
+    public void extractMagnitude(){
+        String t = getDescription().substring(getDescription().indexOf("Magnitude:") + 10, getDescription().length());
+        setMagnitude(t);
+    }
 }
