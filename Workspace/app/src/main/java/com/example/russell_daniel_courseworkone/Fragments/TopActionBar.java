@@ -25,7 +25,7 @@ public class TopActionBar extends Fragment implements View.OnClickListener {
     {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_actionbar, container, false);
-        NavBar = (Toolbar) v.findViewById(R.id.my_toolbar);
+        NavBar = (Toolbar) v.findViewById(R.id.top_navigation);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(NavBar);
         return v;

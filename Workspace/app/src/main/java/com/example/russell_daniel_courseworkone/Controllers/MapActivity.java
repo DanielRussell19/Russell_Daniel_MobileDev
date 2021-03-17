@@ -63,6 +63,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setAllGesturesEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Double.parseDouble(readings.get(0).getLat()), Double.parseDouble(readings.get(0).getLon()))));
     }
 }

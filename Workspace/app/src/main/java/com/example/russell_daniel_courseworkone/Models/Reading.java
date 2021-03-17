@@ -1,8 +1,10 @@
 package com.example.russell_daniel_courseworkone.Models;
 
+import java.io.Serializable;
+
 //Daniel Russell S1707149
 //Class used to define Reading objects
-public class Reading {
+public class Reading implements Serializable {
     private String title, description, link, pubdate, category,lat,lon, depth, magnitude;
     public String getTitle() {
         return title;
