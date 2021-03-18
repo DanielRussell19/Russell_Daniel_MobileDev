@@ -15,7 +15,6 @@ import com.example.russell_daniel_courseworkone.R;
 public class ReadingDisplay extends Fragment {
 
     private Reading reading;
-    
     private TextView txtTitle;
     private TextView txtDescription;
     private TextView txtPubDate;
@@ -23,10 +22,11 @@ public class ReadingDisplay extends Fragment {
     private TextView txtDepth;
     private TextView txtLat;
     private TextView txtLon;
+    private TextView txtCategory;
     private TextView txtUrl;
 
     public ReadingDisplay(Reading reading) {
-        this.reading = reading;
+        super(); this.reading = reading;
     }
 
     @Override
@@ -45,6 +45,7 @@ public class ReadingDisplay extends Fragment {
         txtLat = (TextView) v.findViewById(R.id.txtLat);
         txtLon = (TextView) v.findViewById(R.id.txtLon);
         txtUrl = (TextView) v.findViewById(R.id.txtUrl);
+        txtCategory = (TextView) v.findViewById(R.id.txtCategory);
 
         txtTitle.setText(reading.getTitle());
         txtDescription.setText(reading.getDescription());
@@ -53,6 +54,7 @@ public class ReadingDisplay extends Fragment {
         txtDepth.setText("Depth: " + reading.getDepth());
         txtLat.setText("Lat: " + reading.getLat());
         txtLon.setText("Long: " + reading.getLon());
+        txtCategory.setText("Category: " + reading.getCategory());
 
         txtUrl.setText(Html.fromHtml("<a href=" + reading.getLink() + ">Source</a> "));
         txtUrl.setMovementMethod(LinkMovementMethod.getInstance());

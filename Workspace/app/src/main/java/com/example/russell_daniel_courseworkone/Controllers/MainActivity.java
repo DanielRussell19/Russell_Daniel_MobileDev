@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.russell_daniel_courseworkone.Fragments.BottomNavBar;
 import com.example.russell_daniel_courseworkone.Fragments.TopActionBar;

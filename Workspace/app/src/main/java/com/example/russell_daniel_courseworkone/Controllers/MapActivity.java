@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -58,7 +59,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         for(Reading x: readings){
             LatLng pos = new LatLng(Double.parseDouble(x.getLat()), Double.parseDouble(x.getLon()));
-            mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()));
+            //mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()));
+
+            Double tempMag = Double.parseDouble(x.getMagnitude());
+
+            if(tempMag <= 1.0){
+                mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            }
+            else if(tempMag > 2.0){
+                mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            }
+            else if(tempMag > 1.0){
+                mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+            }
         }
 
         mMap.getUiSettings().setZoomControlsEnabled(true);

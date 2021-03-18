@@ -22,12 +22,11 @@ public class DetailedReadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailedreading);
 
-        FragNavBar = new TopActionBar();
-        FragBotNavBar = new BottomNavBar();
-
         reading = (Reading) getIntent().getSerializableExtra("Reading");
 
         FragReadDisplay = new ReadingDisplay(reading);
+        FragNavBar = new TopActionBar();
+        FragBotNavBar = new BottomNavBar();
 
         FragmentManager manageNavBar = getSupportFragmentManager();
         FragmentTransaction transactionA = manageNavBar.beginTransaction();

@@ -83,6 +83,8 @@ public class ThreadedTask extends Thread
 
            //checks for any forgotten input Readings
            if(reading.getLon() != null){
+               reading.extractMagnitude();
+               reading.extractDepth();
                result.add(reading);
                reading = null;
            }

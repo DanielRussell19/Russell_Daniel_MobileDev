@@ -7,15 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.russell_daniel_courseworkone.Controllers.DetailedReadingActivity;
+import com.example.russell_daniel_courseworkone.Models.CustomAdapter;
 import com.example.russell_daniel_courseworkone.Models.Reading;
 import com.example.russell_daniel_courseworkone.Models.XmlParser;
 import com.example.russell_daniel_courseworkone.R;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,16 +66,11 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
     public void getReadings(View v){
         List<Reading> result;
+
         XmlParser xp = new XmlParser();
         result = xp.getXML();
 
-        ArrayList<String> readingTitles = new ArrayList<String>();
-        for(Reading x : result){
-            readingTitles.add(x.getTitle());
-        }
-
-        ArrayAdapter<String> AA = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_list_item_1, readingTitles);
-
+        CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
         readingList.setAdapter( AA );
     }
 

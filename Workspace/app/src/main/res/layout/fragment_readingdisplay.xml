@@ -42,6 +42,11 @@ Controller used to handle MainActivity -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/txtCategory"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/txtMag"/>
 
     <TextView
