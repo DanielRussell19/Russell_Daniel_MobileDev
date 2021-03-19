@@ -25,10 +25,6 @@ public class ReadingDisplay extends Fragment {
     private TextView txtCategory;
     private TextView txtUrl;
 
-    public ReadingDisplay(Reading reading) {
-        super(); this.reading = reading;
-    }
-
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -36,6 +32,7 @@ public class ReadingDisplay extends Fragment {
     )
     {
         View v = inflater.inflate(R.layout.fragment_readingdisplay, container, false);
+        reading = (Reading) getActivity().getIntent().getSerializableExtra("Reading");
 
         txtTitle = (TextView) v.findViewById(R.id.txtTitle);
         txtDescription = (TextView) v.findViewById(R.id.txtDescription);

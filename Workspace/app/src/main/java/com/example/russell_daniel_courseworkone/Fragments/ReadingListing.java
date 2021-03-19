@@ -1,14 +1,19 @@
 package com.example.russell_daniel_courseworkone.Fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,9 +35,17 @@ import java.util.List;
 
 //Daniel Russell S1707149
 //Class used to execute the Threaded Task as a new thread
-public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener {
+public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private ListView readingList;
+    private Button btnDateFilter;
+    private Button btnDirectionFilter;
+
+    private RadioGroup rgSorts;
+    private RadioButton rbNone;
+    private RadioButton rbMag;
+    private RadioButton rbDepthA;
+    private RadioButton rbDepthD;
 
     @Override
     public View onCreateView(
@@ -43,7 +56,23 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         View v = inflater.inflate(R.layout.fragment_readinglisting, container, false);
 
         readingList = (ListView) v.findViewById(R.id.list);
+        btnDateFilter = (Button) v.findViewById(R.id.btnDateFilter);
+        btnDirectionFilter = (Button) v.findViewById(R.id.btnDirectionFilter);
+
+        rgSorts = (RadioGroup) v.findViewById(R.id.rgSorts);
+        rbNone = (RadioButton) v.findViewById(R.id.rbNone);
+        rbMag = (RadioButton) v.findViewById(R.id.rbMag);
+        rbDepthA = (RadioButton) v.findViewById(R.id.rbDepthA);
+        rbDepthD = (RadioButton) v.findViewById(R.id.rbDepthD);
+
         readingList.setOnItemClickListener(this);
+
+        rbNone.setOnClickListener(this);
+        rbMag.setOnClickListener(this);
+        rbDepthA.setOnClickListener(this);
+        rbDepthD.setOnClickListener(this);
+        btnDirectionFilter.setOnClickListener(this);
+        btnDateFilter.setOnClickListener(this);
 
         return v;
     }
@@ -99,6 +128,24 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     }
 
     public void sortDirection(){
+
+    }
+
+    public void sortDate(){
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch ( v.getId() ){
+            case R.id.rbNone: System.out.println("Noe"); break;
+            case R.id.btnDateFilter: System.out.println("Date"); break;
+            case R.id.btnDirectionFilter: System.out.println("Erection"); break;
+            case R.id.rbMag: System.out.println("Mag"); break;
+            case R.id.rbDepthA: System.out.println("DepthA"); break;
+            case R.id.rbDepthD: System.out.println("DepthB"); break;
+        }
 
     }
 }

@@ -5,20 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.example.russell_daniel_courseworkone.R;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+//Daniel Russell S1707149
+//Class used to execute the Threaded Task as a new thread
 public class CustomAdapter extends ArrayAdapter {
 
     ArrayList<Reading> readings;
@@ -31,7 +25,7 @@ public class CustomAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v; //= super.getView(position, convertView, parent);
+        View v;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         v = inflater.inflate(android.R.layout.simple_list_item_1, null);

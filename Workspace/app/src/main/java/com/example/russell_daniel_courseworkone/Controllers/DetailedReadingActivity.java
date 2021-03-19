@@ -1,5 +1,6 @@
 package com.example.russell_daniel_courseworkone.Controllers;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -22,25 +23,37 @@ public class DetailedReadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailedreading);
 
-        reading = (Reading) getIntent().getSerializableExtra("Reading");
-
-        FragReadDisplay = new ReadingDisplay(reading);
+        FragReadDisplay = new ReadingDisplay();
         FragNavBar = new TopActionBar();
         FragBotNavBar = new BottomNavBar();
 
-        FragmentManager manageNavBar = getSupportFragmentManager();
-        FragmentTransaction transactionA = manageNavBar.beginTransaction();
-        transactionA.replace(R.id.fragNavBar, FragNavBar);
-        transactionA.commit();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            FragmentManager manageReadingDisplay = getSupportFragmentManager();
+            FragmentTransaction transactionB = manageReadingDisplay.beginTransaction();
+            transactionB.replace(R.id.fragReadDisplay, FragReadDisplay);
+            transactionB.commit();
 
-        FragmentManager manageReadingDisplay = getSupportFragmentManager();
-        FragmentTransaction transactionB = manageReadingDisplay.beginTransaction();
-        transactionB.replace(R.id.fragReadDisplay, FragReadDisplay);
-        transactionB.commit();
+            FragmentManager manageBotNavBar = getSupportFragmentManager();
+            FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
+            transactionC.replace(R.id.fragBotNav, FragBotNavBar);
+            transactionC.commit();
+        }
+        else
+        {
+            FragmentManager manageNavBar = getSupportFragmentManager();
+            FragmentTransaction transactionA = manageNavBar.beginTransaction();
+            transactionA.replace(R.id.fragNavBar, FragNavBar);
+            transactionA.commit();
 
-        FragmentManager manageBotNavBar = getSupportFragmentManager();
-        FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
-        transactionC.replace(R.id.fragBotNav, FragBotNavBar);
-        transactionC.commit();
+            FragmentManager manageReadingDisplay = getSupportFragmentManager();
+            FragmentTransaction transactionB = manageReadingDisplay.beginTransaction();
+            transactionB.replace(R.id.fragReadDisplay, FragReadDisplay);
+            transactionB.commit();
+
+            FragmentManager manageBotNavBar = getSupportFragmentManager();
+            FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
+            transactionC.replace(R.id.fragBotNav, FragBotNavBar);
+            transactionC.commit();
+        }
     }
 }

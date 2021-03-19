@@ -1,5 +1,6 @@
 package com.example.russell_daniel_courseworkone.Controllers;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -36,19 +37,32 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         FragBotNavBar = new BottomNavBar();
         FragNavBar = new TopActionBar();
 
-        FragmentManager manageNavBar = getSupportFragmentManager();
-        FragmentTransaction transactionB = manageNavBar.beginTransaction();
-        transactionB.replace(R.id.fragNavBar, FragNavBar);
-        transactionB.commit();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            FragmentManager manageBotNavBar = getSupportFragmentManager();
+            FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
+            transactionC.replace(R.id.fragBotNav, FragBotNavBar);
+            transactionC.commit();
 
-        FragmentManager manageBotNavBar = getSupportFragmentManager();
-        FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
-        transactionC.replace(R.id.fragBotNav, FragBotNavBar);
-        transactionC.commit();
+            SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().add(R.id.map_con, mapFragment).commit();
+            mapFragment.getMapAsync(this);
+        }
+        else{
+            FragmentManager manageNavBar = getSupportFragmentManager();
+            FragmentTransaction transactionB = manageNavBar.beginTransaction();
+            transactionB.replace(R.id.fragNavBar, FragNavBar);
+            transactionB.commit();
 
-        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().add(R.id.map_con, mapFragment).commit();
-        mapFragment.getMapAsync(this);
+            FragmentManager manageBotNavBar = getSupportFragmentManager();
+            FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
+            transactionC.replace(R.id.fragBotNav, FragBotNavBar);
+            transactionC.commit();
+
+            SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().add(R.id.map_con, mapFragment).commit();
+            mapFragment.getMapAsync(this);
+        }
     }
 
     @Override
@@ -59,7 +73,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         for(Reading x: readings){
             LatLng pos = new LatLng(Double.parseDouble(x.getLat()), Double.parseDouble(x.getLon()));
-            //mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()));
 
             Double tempMag = Double.parseDouble(x.getMagnitude());
 
