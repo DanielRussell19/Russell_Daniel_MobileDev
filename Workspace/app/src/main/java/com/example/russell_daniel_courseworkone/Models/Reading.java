@@ -71,7 +71,7 @@ public class Reading implements Serializable {
     }
 
     public void extractDepth(){
-        String t = getDescription().substring(getDescription().indexOf("Depth:") + 6, getDescription().indexOf("km"));
+        String t = getDescription().substring(getDescription().indexOf("Depth:") + 7, getDescription().indexOf("km") - 1);
         setDepth(t);
     }
 
