@@ -19,7 +19,7 @@ Controller used to handle MainActivity -->
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:scrollbarStyle="insideOverlay"
         android:id="@+id/list"
         android:orientation="vertical"
@@ -58,7 +58,7 @@ Controller used to handle MainActivity -->
             android:id="@+id/rbDepthD"></RadioButton>
     </RadioGroup>
 
-    <Button
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Directional Sort"
@@ -70,7 +70,7 @@ Controller used to handle MainActivity -->
         android:text="Filter?"
         android:textAlignment="center" />
 
-    <Button
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Date Filter"

@@ -18,8 +18,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BottomNavBar extends Fragment implements View.OnClickListener {
 
     private BottomNavigationView NavBar;
-    private MenuItem pgListing;
-    private MenuItem pgMap;
+    private View pgListing;
+    private View pgMap;
 
     @Override
     public View onCreateView(
@@ -31,16 +31,27 @@ public class BottomNavBar extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_bottom_navigation, container, false);
         NavBar = (BottomNavigationView) v.findViewById(R.id.bottom_navigation);
 
+        pgListing = (View) v.findViewById(R.id.pgListing);
+        pgMap = (View) v.findViewById(R.id.pgMap);
+
+        switch( getActivity().getLocalClassName() ){
+            case "Controllers.MainActivity": pgListing.setEnabled(false); pgMap.setEnabled(true); break;
+            case "Controllers.MapActivity": pgListing.setEnabled(true); pgMap.setEnabled(false); break;
+            default: pgListing.setEnabled(true); pgMap.setEnabled(true); break;
+        }
+
         NavBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.pgListing:
                         Intent Intent1 = new Intent(v.getContext(), MainActivity.class);
+                        getActivity().finish();
                         startActivity(Intent1);
                         break;
                     case R.id.pgMap:
                         Intent Intent2 = new Intent(v.getContext(), MapActivity.class);
+                        getActivity().finish();
                         startActivity(Intent2);
                         break;
                 }
