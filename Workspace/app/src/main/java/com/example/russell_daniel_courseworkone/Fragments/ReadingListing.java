@@ -43,6 +43,7 @@ import java.util.Locale;
 public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
 
     private List<Reading> result = null;
+    private List<Reading> resultDate = null;
     private String startDate, endDate;
 
     private ListView readingList;
@@ -114,24 +115,37 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
     @Override
     public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
-        CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
+
+        List<Reading> usedList;
+
+        CustomAdapter AA;
+        if(resultDate == null){
+            usedList = result;
+           AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+
+        }
+        else{
+            usedList = resultDate;
+            AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+        }
+
 
         switch ( p.getItemAtPosition(pos).toString() ){
             case "None":
                 break;
 
             case "North":
-                for(int i = 1; i < result.size(); i++){
+                for(int i = 1; i < usedList.size(); i++){
 
-                    Reading target = result.get(i);
+                    Reading target = usedList.get(i);
                     int in = i - 1;
 
-                    while( in >= 0 && Double.parseDouble(result.get(in).getLat()) < Double.parseDouble(target.getLat()) ){
-                        result.set(in + 1, result.get(in));
+                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLat()) < Double.parseDouble(target.getLat()) ){
+                        usedList.set(in + 1, usedList.get(in));
                         in = in - 1;
                     }
 
-                    result.set(in + 1, target);
+                    usedList.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
 
@@ -140,17 +154,17 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                 break;
 
             case "East":
-                for(int i = 1; i < result.size(); i++){
+                for(int i = 1; i < usedList.size(); i++){
 
-                    Reading target = result.get(i);
+                    Reading target = usedList.get(i);
                     int in = i - 1;
 
-                    while( in >= 0 && Double.parseDouble(result.get(in).getLon()) < Double.parseDouble(target.getLon()) ){
-                        result.set(in + 1, result.get(in));
+                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLon()) < Double.parseDouble(target.getLon()) ){
+                        usedList.set(in + 1, usedList.get(in));
                         in = in - 1;
                     }
 
-                    result.set(in + 1, target);
+                    usedList.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
 
@@ -159,17 +173,17 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                 break;
 
             case "South":
-                for(int i = 1; i < result.size(); i++){
+                for(int i = 1; i < usedList.size(); i++){
 
-                    Reading target = result.get(i);
+                    Reading target = usedList.get(i);
                     int in = i - 1;
 
-                    while( in >= 0 && Double.parseDouble(result.get(in).getLat()) > Double.parseDouble(target.getLat()) ){
-                        result.set(in + 1, result.get(in));
+                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLat()) > Double.parseDouble(target.getLat()) ){
+                        usedList.set(in + 1, usedList.get(in));
                         in = in - 1;
                     }
 
-                    result.set(in + 1, target);
+                    usedList.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
 
@@ -178,17 +192,17 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                 break;
 
             case "West":
-                for(int i = 1; i < result.size(); i++){
+                for(int i = 1; i < usedList.size(); i++){
 
-                    Reading target = result.get(i);
+                    Reading target = usedList.get(i);
                     int in = i - 1;
 
-                    while( in >= 0 && Double.parseDouble(result.get(in).getLon()) > Double.parseDouble(target.getLon()) ){
-                        result.set(in + 1, result.get(in));
+                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLon()) > Double.parseDouble(target.getLon()) ){
+                        usedList.set(in + 1, usedList.get(in));
                         in = in - 1;
                     }
 
-                    result.set(in + 1, target);
+                    usedList.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
 
@@ -211,7 +225,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
             case R.id.rbDepthD: sortDeepest(v); break;
             case R.id.btnDateFilterStart: dateShowDialog(); break;
             case R.id.btnDateFilterEnd: dateShowDialog(); break;
-            case R.id.btnDateFilterClear: clearDate(); getReadings(v); break;
+            case R.id.btnDateFilterClear: clearDate(); btnDirectionFilter.setSelection(0); rgSorts.clearCheck(); getReadings(v); break;
         }
 
     }
@@ -236,6 +250,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
         this.startDate = null;
         this.endDate = null;
+
+        resultDate = null;
     }
 
     public void dateShowDialog(){
@@ -274,7 +290,16 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     }
 
     public void getReading(int pos, View v){
-        Reading t = result.get(pos);
+        List<Reading> usedList;
+
+        if(resultDate == null){
+            usedList = result;
+        }
+        else{
+            usedList = resultDate;
+        }
+
+        Reading t = usedList.get(pos);
         Intent intent = new Intent(v.getContext(), DetailedReadingActivity.class);
         intent.putExtra("Reading", t);
         this.getActivity().finish();
@@ -282,60 +307,99 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     }
 
     public void sortMagnitude(View v){
-        for(int i = 1; i < result.size(); i++){
 
-            Reading target = result.get(i);
+        List<Reading> usedList;
+
+        CustomAdapter AA;
+        if(resultDate == null){
+            usedList = result;
+            AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+
+        }
+        else{
+            usedList = resultDate;
+            AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+        }
+
+        for(int i = 1; i < usedList.size(); i++){
+
+            Reading target = usedList.get(i);
             int in = i - 1;
 
-            while( in >= 0 && Double.parseDouble(result.get(in).getMagnitude()) < Double.parseDouble(target.getMagnitude()) ){
-                result.set(in + 1, result.get(in));
+            while( in >= 0 && Double.parseDouble(usedList.get(in).getMagnitude()) < Double.parseDouble(target.getMagnitude()) ){
+                usedList.set(in + 1, usedList.get(in));
                 in = in - 1;
             }
 
-            result.set(in + 1, target);
+            usedList.set(in + 1, target);
         }
 
-        CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
         AA.notifyDataSetChanged();
 
         readingList.setAdapter( AA );
     }
 
     public void sortDeepest(View v){
-        for(int i = 1; i < result.size(); i++){
 
-            Reading target = result.get(i);
+        List<Reading> usedList;
+
+        CustomAdapter AA;
+        if(resultDate == null){
+            usedList = result;
+            AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+
+        }
+        else{
+            usedList = resultDate;
+            AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+        }
+
+        for(int i = 1; i < usedList.size(); i++){
+
+            Reading target = usedList.get(i);
             int in = i - 1;
 
-            while( in >= 0 && Integer.parseInt(result.get(in).getDepth()) < Integer.parseInt(target.getDepth()) ){
-                result.set(in + 1, result.get(in));
+            while( in >= 0 && Integer.parseInt(usedList.get(in).getDepth()) < Integer.parseInt(target.getDepth()) ){
+                usedList.set(in + 1, usedList.get(in));
                 in = in - 1;
             }
 
-            result.set(in + 1, target);
+            usedList.set(in + 1, target);
         }
 
-        CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
         AA.notifyDataSetChanged();
 
         readingList.setAdapter( AA );
     }
 
     public void sortShallowest(View v){
-        for(int i = 1; i < result.size(); i++){
 
-            Reading target = result.get(i);
+        List<Reading> usedList;
+
+        CustomAdapter AA;
+        if(resultDate == null){
+            usedList = result;
+            AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+
+        }
+        else{
+            usedList = resultDate;
+            AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, usedList);
+        }
+
+        for(int i = 1; i < usedList.size(); i++){
+
+            Reading target = usedList.get(i);
             int in = i - 1;
 
-            while( in >= 0 && Integer.parseInt(result.get(in).getDepth()) > Integer.parseInt(target.getDepth()) ){
-                result.set(in + 1, result.get(in));
+            while( in >= 0 && Integer.parseInt(usedList.get(in).getDepth()) > Integer.parseInt(target.getDepth()) ){
+                usedList.set(in + 1, usedList.get(in));
                 in = in - 1;
             }
 
-            result.set(in + 1, target);
+            usedList.set(in + 1, target);
         }
 
-        CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
         AA.notifyDataSetChanged();
 
         readingList.setAdapter( AA );
@@ -344,7 +408,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     public void searchByDate(String date){
         try{
             List<Reading> listremove = new ArrayList<Reading>();
-            List<Reading> resultDate = new ArrayList<Reading>();
+            resultDate = new ArrayList<Reading>();
             resultDate.addAll(result);
 
             String in = parseDate(date);
@@ -378,7 +442,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     public void searchBetweenDates(String dateS, String dateE){
         try{
             List<Reading> listremove = new ArrayList<Reading>();
-            List<Reading> resultDate = new ArrayList<Reading>();
+            resultDate = new ArrayList<Reading>();
             resultDate.addAll(result);
 
             String in1 = parseDate(dateS);
@@ -390,7 +454,10 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
             for(Reading x : resultDate){
                 Date xDate = format.parse(x.getPubdate());
-                if(!(xDate.after(target1) && xDate.before(target2))){
+                if((xDate.equals(target1) || xDate.equals(target2))){
+
+                }
+                else if(!(xDate.after(target1) && xDate.before(target2))){
                     listremove.add(x);
                 }
             }
