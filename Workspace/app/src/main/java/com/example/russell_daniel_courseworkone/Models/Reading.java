@@ -2,7 +2,10 @@ package com.example.russell_daniel_courseworkone.Models;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 //Daniel Russell S1707149
 //Class used to define Reading objects

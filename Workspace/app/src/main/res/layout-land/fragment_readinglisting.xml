@@ -36,11 +36,11 @@ Controller used to handle MainActivity -->
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/rgSorts">
-        <RadioButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="None"
-            android:id="@+id/rbNone"></RadioButton>
+            android:text="Reset"
+            android:id="@+id/rbNone"></Button>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,12 +49,12 @@ Controller used to handle MainActivity -->
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Depth Asc"
+            android:text="Shallowest"
             android:id="@+id/rbDepthA"></RadioButton>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Depth Desc"
+            android:text="Deepest"
             android:id="@+id/rbDepthD"></RadioButton>
     </RadioGroup>
 
@@ -67,13 +67,31 @@ Controller used to handle MainActivity -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Filter?"
+        android:text="Date Filter?"
         android:textAlignment="center" />
 
-    <Spinner
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date Filter"
-        android:id="@+id/btnDateFilter"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Start?"
+            android:id="@+id/btnDateFilterStart" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date End?"
+            android:id="@+id/btnDateFilterEnd" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:id="@+id/btnDateFilterClear" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.russell_daniel_courseworkone.Fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,36 +10,47 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import com.example.russell_daniel_courseworkone.Controllers.DetailedReadingActivity;
 import com.example.russell_daniel_courseworkone.Models.CustomAdapter;
+import com.example.russell_daniel_courseworkone.Models.CustomDatePicker;
 import com.example.russell_daniel_courseworkone.Models.Reading;
 import com.example.russell_daniel_courseworkone.Models.XmlParser;
 import com.example.russell_daniel_courseworkone.R;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 //Daniel Russell S1707149
 //Class used to execute the Threaded Task as a new thread
-public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
 
-    private List<Reading> result = null;
+    private List<Reading> result, resultDate = null;
+    private String startDate, endDate;
 
     private ListView readingList;
-    private Spinner btnDateFilter;
     private Spinner btnDirectionFilter;
 
+    private Button btnDateFilterStart, btnDateFilterEnd, btnDateFilterClear;
+
     private RadioGroup rgSorts;
-    private RadioButton rbNone;
-    private RadioButton rbMag;
-    private RadioButton rbDepthA;
-    private RadioButton rbDepthD;
+    private Button rbNone;
+    private RadioButton rbMag, rbDepthA, rbDepthD;
 
     @Override
     public View onCreateView(
@@ -48,11 +61,16 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         View v = inflater.inflate(R.layout.fragment_readinglisting, container, false);
 
         readingList = (ListView) v.findViewById(R.id.list);
-        btnDateFilter = (Spinner) v.findViewById(R.id.btnDateFilter);
+
+        btnDateFilterStart = (Button) v.findViewById(R.id.btnDateFilterStart);
+        btnDateFilterEnd = (Button) v.findViewById(R.id.btnDateFilterEnd);
+        btnDateFilterClear = (Button) v.findViewById(R.id.btnDateFilterClear);
+        btnDateFilterEnd.setEnabled(false);
+
         btnDirectionFilter = (Spinner) v.findViewById(R.id.btnDirectionFilter);
 
         rgSorts = (RadioGroup) v.findViewById(R.id.rgSorts);
-        rbNone = (RadioButton) v.findViewById(R.id.rbNone);
+        rbNone = (Button) v.findViewById(R.id.rbNone);
         rbMag = (RadioButton) v.findViewById(R.id.rbMag);
         rbDepthA = (RadioButton) v.findViewById(R.id.rbDepthA);
         rbDepthD = (RadioButton) v.findViewById(R.id.rbDepthD);
@@ -68,6 +86,10 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         rbMag.setOnClickListener(this);
         rbDepthA.setOnClickListener(this);
         rbDepthD.setOnClickListener(this);
+
+        btnDateFilterStart.setOnClickListener(this);
+        btnDateFilterEnd.setOnClickListener(this);
+        btnDateFilterClear.setOnClickListener(this);
 
         return v;
     }
@@ -90,10 +112,15 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
     @Override
     public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
+        CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
+
         switch ( p.getItemAtPosition(pos).toString() ){
             case "None":
                 getReadings(v);
+                rgSorts.clearCheck();
+                clearDate();
                 break;
+
             case "North":
                 for(int i = 1; i < result.size(); i++){
 
@@ -107,7 +134,11 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
                     result.set(in + 1, target);
                 }
+                rgSorts.clearCheck();
+                clearDate();
+                readingList.setAdapter( AA );
                 break;
+
             case "East":
                 for(int i = 1; i < result.size(); i++){
 
@@ -121,7 +152,11 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
                     result.set(in + 1, target);
                 }
+                rgSorts.clearCheck();
+                clearDate();
+                readingList.setAdapter( AA );
                 break;
+
             case "South":
                 for(int i = 1; i < result.size(); i++){
 
@@ -135,7 +170,11 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
                     result.set(in + 1, target);
                 }
+                rgSorts.clearCheck();
+                clearDate();
+                readingList.setAdapter( AA );
                 break;
+
             case "West":
                 for(int i = 1; i < result.size(); i++){
 
@@ -149,6 +188,9 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
                     result.set(in + 1, target);
                 }
+                rgSorts.clearCheck();
+                clearDate();
+                readingList.setAdapter( AA );
                 break;
         }
     }
@@ -160,12 +202,60 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     public void onClick(View v) {
 
         switch ( v.getId() ){
-            case R.id.rbNone: getReadings(v); break;
-            case R.id.rbMag: sortMagnitude(v); break;
-            case R.id.rbDepthA: sortShallowest(v); break;
-            case R.id.rbDepthD: sortDeepest(v); break;
+            case R.id.rbNone: clearDate(); btnDirectionFilter.setSelection(0); rgSorts.clearCheck(); getReadings(v); break;
+            case R.id.rbMag: clearDate(); sortMagnitude(v); break;
+            case R.id.rbDepthA: clearDate(); sortShallowest(v); break;
+            case R.id.rbDepthD: clearDate(); sortDeepest(v); break;
+            case R.id.btnDateFilterStart: dateShowDialog(); break;
+            case R.id.btnDateFilterEnd: dateShowDialog(); break;
+            case R.id.btnDateFilterClear: clearDate(); break;
         }
 
+    }
+
+    public void setStartDate(String date){
+        System.out.println(date);
+        this.startDate = date;
+        searchByDate(date);
+        btnDateFilterEnd.setEnabled(true);
+    }
+
+    public void setEndDate(String endDate){
+        System.out.println(endDate);
+        this.endDate = endDate;
+        searchBetweenDates(startDate, endDate);
+    }
+
+    public void clearDate(){
+        btnDateFilterEnd.setText("Date End?");
+        btnDateFilterStart.setText("Date Start?");
+        btnDateFilterEnd.setEnabled(false);
+
+        this.startDate = null;
+        this.endDate = null;
+    }
+
+    public void dateShowDialog(){
+        DialogFragment datePicker = new CustomDatePicker();
+        datePicker.setTargetFragment(this, 0);
+        datePicker.show(getFragmentManager(), "Date Dialog");
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String selectedDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+
+        if(btnDateFilterEnd.isEnabled()){
+            setEndDate(selectedDate);
+        }
+        else{
+            setStartDate(selectedDate);
+        }
     }
 
     public void getReadings(View v){
@@ -236,5 +326,62 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
         CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
         readingList.setAdapter( AA );
+    }
+
+    public void searchByDate(String date){
+        try{
+            resultDate = result;
+
+            String t = parseDate(date);
+
+            for(Reading x : resultDate){
+                x.setPubdate(t);
+            }
+
+            CustomAdapter AA = new CustomAdapter(getView().getContext(), android.R.layout.simple_list_item_1, resultDate);
+            readingList.setAdapter( AA );
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        //tue, 16 mar 2021, time
+        //Monday, March 22, 2021
+    }
+
+    public void searchBetweenDates(String dateS, String dateE){
+        try{
+            resultDate = result;
+
+            for(Reading x : resultDate){
+                x.setPubdate( parseDate( x.getPubdate() ) );
+            }
+
+            CustomAdapter AA = new CustomAdapter(getView().getContext(), android.R.layout.simple_list_item_1, resultDate);
+            readingList.setAdapter( AA );
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        //tue, 16 mar 2021, time
+        //Monday, March 22, 2021
+    }
+
+    public String parseDate(String in) {
+        try{
+            DateFormat originalFormat = new SimpleDateFormat("E, MMMM dd, yyyy", Locale.ENGLISH);
+            DateFormat targetFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
+
+            Date date = originalFormat.parse(in);
+            String out = targetFormat.format(date);
+
+            System.out.println(out);
+            return out;
+        }
+        catch(ParseException e){
+            System.out.println(e);
+        }
+        return null;
     }
 }
