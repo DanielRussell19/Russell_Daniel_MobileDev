@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +39,16 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 //Daniel Russell S1707149
 //Class used to execute the Threaded Task as a new thread
 public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
+
+    private Handler h = new Handler();
+    private Runnable recursiveFetch;
 
     private List<Reading> result = null;
     private List<Reading> resultDate = null;
@@ -103,9 +111,27 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        h.removeCallbacksAndMessages(null);
+        System.out.println("Recursive Fetch Killed.");
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         getReadings(getView());
+
+        recursiveFetch = new Runnable() {
+            @Override
+            public void run() {
+                getReadingUpdates();
+                System.out.println("Result Renewed");
+                h.postDelayed(this, 10000);
+            }
+        };
+
+        h.post(recursiveFetch);
     }
 
     @Override
@@ -289,6 +315,16 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         readingList.setAdapter( AA );
     }
 
+    public void getReadingUpdates(){
+        XmlParser xp = new XmlParser();
+        List<Reading> newList = xp.getXML();
+
+        if(newList.containsAll(result)){
+            result = new ArrayList<Reading>();
+            result.addAll(newList);
+        }
+    }
+
     public void getReading(int pos, View v){
         List<Reading> usedList;
 
@@ -302,6 +338,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         Reading t = usedList.get(pos);
         Intent intent = new Intent(v.getContext(), DetailedReadingActivity.class);
         intent.putExtra("Reading", t);
+
         this.getActivity().finish();
         startActivity(intent);
     }
