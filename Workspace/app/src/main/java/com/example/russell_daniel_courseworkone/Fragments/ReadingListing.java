@@ -31,8 +31,10 @@ import com.example.russell_daniel_courseworkone.R;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +42,7 @@ import java.util.Locale;
 //Class used to execute the Threaded Task as a new thread
 public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
 
-    private List<Reading> result, resultDate = null;
+    private List<Reading> result = null;
     private String startDate, endDate;
 
     private ListView readingList;
@@ -116,9 +118,6 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
         switch ( p.getItemAtPosition(pos).toString() ){
             case "None":
-                getReadings(v);
-                rgSorts.clearCheck();
-                clearDate();
                 break;
 
             case "North":
@@ -135,8 +134,9 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                     result.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
-                clearDate();
+
                 readingList.setAdapter( AA );
+                AA.notifyDataSetChanged();
                 break;
 
             case "East":
@@ -153,8 +153,9 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                     result.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
-                clearDate();
+
                 readingList.setAdapter( AA );
+                AA.notifyDataSetChanged();
                 break;
 
             case "South":
@@ -171,8 +172,9 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                     result.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
-                clearDate();
+
                 readingList.setAdapter( AA );
+                AA.notifyDataSetChanged();
                 break;
 
             case "West":
@@ -189,8 +191,9 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                     result.set(in + 1, target);
                 }
                 rgSorts.clearCheck();
-                clearDate();
+
                 readingList.setAdapter( AA );
+                AA.notifyDataSetChanged();
                 break;
         }
     }
@@ -203,25 +206,23 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
         switch ( v.getId() ){
             case R.id.rbNone: clearDate(); btnDirectionFilter.setSelection(0); rgSorts.clearCheck(); getReadings(v); break;
-            case R.id.rbMag: clearDate(); sortMagnitude(v); break;
-            case R.id.rbDepthA: clearDate(); sortShallowest(v); break;
-            case R.id.rbDepthD: clearDate(); sortDeepest(v); break;
+            case R.id.rbMag: sortMagnitude(v); break;
+            case R.id.rbDepthA: sortShallowest(v); break;
+            case R.id.rbDepthD: sortDeepest(v); break;
             case R.id.btnDateFilterStart: dateShowDialog(); break;
             case R.id.btnDateFilterEnd: dateShowDialog(); break;
-            case R.id.btnDateFilterClear: clearDate(); break;
+            case R.id.btnDateFilterClear: clearDate(); getReadings(v); break;
         }
 
     }
 
     public void setStartDate(String date){
-        System.out.println(date);
         this.startDate = date;
         searchByDate(date);
         btnDateFilterEnd.setEnabled(true);
     }
 
     public void setEndDate(String endDate){
-        System.out.println(endDate);
         this.endDate = endDate;
         searchBetweenDates(startDate, endDate);
     }
@@ -229,7 +230,9 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
     public void clearDate(){
         btnDateFilterEnd.setText("Date End?");
         btnDateFilterStart.setText("Date Start?");
+
         btnDateFilterEnd.setEnabled(false);
+        btnDateFilterStart.setEnabled(true);
 
         this.startDate = null;
         this.endDate = null;
@@ -250,11 +253,13 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
         String selectedDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-        if(btnDateFilterEnd.isEnabled()){
+        if(btnDateFilterEnd.isEnabled() && startDate != null){
             setEndDate(selectedDate);
+            btnDateFilterEnd.setEnabled(false);
         }
         else{
             setStartDate(selectedDate);
+            btnDateFilterStart.setEnabled(false);
         }
     }
 
@@ -263,6 +268,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         result = xp.getXML();
 
         CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
+        AA.notifyDataSetChanged();
+
         readingList.setAdapter( AA );
     }
 
@@ -289,6 +296,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         }
 
         CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
+        AA.notifyDataSetChanged();
+
         readingList.setAdapter( AA );
     }
 
@@ -307,6 +316,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         }
 
         CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
+        AA.notifyDataSetChanged();
+
         readingList.setAdapter( AA );
     }
 
@@ -325,21 +336,36 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         }
 
         CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
+        AA.notifyDataSetChanged();
+
         readingList.setAdapter( AA );
     }
 
     public void searchByDate(String date){
         try{
-            resultDate = result;
+            List<Reading> listremove = new ArrayList<Reading>();
+            List<Reading> resultDate = new ArrayList<Reading>();
+            resultDate.addAll(result);
 
-            String t = parseDate(date);
+            String in = parseDate(date);
+
+            DateFormat format = new SimpleDateFormat("E, dd MMM yyyy");
+            Date queryTarget = format.parse(in);
 
             for(Reading x : resultDate){
-                x.setPubdate(t);
+                Date xDate = format.parse(x.getPubdate());
+                if(!queryTarget.equals(xDate)){
+                    listremove.add(x);
+                }
             }
 
+            resultDate.removeAll(listremove);
+
             CustomAdapter AA = new CustomAdapter(getView().getContext(), android.R.layout.simple_list_item_1, resultDate);
+            AA.notifyDataSetChanged();
+
             readingList.setAdapter( AA );
+            btnDateFilterStart.setText(in.substring(0, 16));
         }
         catch(Exception e){
             System.out.println(e);
@@ -351,14 +377,31 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
     public void searchBetweenDates(String dateS, String dateE){
         try{
-            resultDate = result;
+            List<Reading> listremove = new ArrayList<Reading>();
+            List<Reading> resultDate = new ArrayList<Reading>();
+            resultDate.addAll(result);
+
+            String in1 = parseDate(dateS);
+            String in2 = parseDate(dateE);
+
+            DateFormat format = new SimpleDateFormat("E, dd MMM yyyy");
+            Date target1 = format.parse(in1);
+            Date target2 = format.parse(in2);
 
             for(Reading x : resultDate){
-                x.setPubdate( parseDate( x.getPubdate() ) );
+                Date xDate = format.parse(x.getPubdate());
+                if(!(xDate.after(target1) && xDate.before(target2))){
+                    listremove.add(x);
+                }
             }
 
+            resultDate.removeAll(listremove);
+
             CustomAdapter AA = new CustomAdapter(getView().getContext(), android.R.layout.simple_list_item_1, resultDate);
+            AA.notifyDataSetChanged();
+
             readingList.setAdapter( AA );
+            btnDateFilterEnd.setText(in2.substring(0, 16));
         }
         catch(Exception e){
             System.out.println(e);
@@ -376,7 +419,6 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
             Date date = originalFormat.parse(in);
             String out = targetFormat.format(date);
 
-            System.out.println(out);
             return out;
         }
         catch(ParseException e){
