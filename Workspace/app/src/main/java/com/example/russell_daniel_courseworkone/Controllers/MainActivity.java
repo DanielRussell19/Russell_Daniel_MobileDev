@@ -18,22 +18,26 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 //Daniel Russell S1707149
-//Controller used to handle MainActivity
+//Controller used to handle main activity
 public class MainActivity extends AppCompatActivity {
 
-    private TopActionBar FragNavBar;
-    private BottomNavBar FragBotNavBar;
-    private ReadingListing FragReadingListing;
+    //variables
+    private TopActionBar FragNavBar; //defines fragnavbar using fragment class topactionbar
+    private BottomNavBar FragBotNavBar; //defines fragbotnavbar using fragment class bottomnavbar
+    private ReadingListing FragReadingListing; //defines fragreadinglisting as fragment class readinglisting
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //instanciation of fragments
         FragReadingListing = new ReadingListing();
         FragNavBar = new TopActionBar();
         FragBotNavBar = new BottomNavBar();
 
+        //If the app is in landscape the top action bar is removed to save space for the remaining views
+        //if the app is in portrait the top action is preserved as there is save for the top action bar to display neatly
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             FragmentManager manageListing = getSupportFragmentManager();
             FragmentTransaction transactionA = manageListing.beginTransaction();

@@ -18,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -45,8 +46,11 @@ import java.util.concurrent.Future;
 
 //Daniel Russell S1707149
 //Class used to execute the Threaded Task as a new thread
+
+//possibly unnessesary amount of implements but wouldn't work otherwise
 public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
 
+    //variables
     private Handler h = new Handler();
     private Runnable recursiveFetch;
 
@@ -110,6 +114,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         super.onViewCreated(view, savedInstanceState);
     }
 
+    //on stopping this fragment the recurrive task is killed
     @Override
     public void onStop() {
         super.onStop();
@@ -117,6 +122,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         System.out.println("Recursive Fetch Killed.");
     }
 
+    //on start getreadings in executed
+    //the recurrsive task of getreadingupdates is executed every 10 seconds
     @Override
     public void onStart() {
         super.onStart();
@@ -134,11 +141,14 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         h.post(recursiveFetch);
     }
 
+    //if a list item is selected such as on the listview for which this is assigned to the corrosponding position is used to
+    //get that specific reading to view in detail
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         getReading(position, view);
     }
 
+    //if list item selected method is executed, used to sort by direction using either dateresult(if not null) or result
     @Override
     public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
 
@@ -238,9 +248,11 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         }
     }
 
+    //overriden methods onnothingselected to ensure nothing happens
     @Override
     public void onNothingSelected(AdapterView<?> parent) { }
 
+    //onclicklistener for button clicks, mainly for radio group and date buttons
     @Override
     public void onClick(View v) {
 
@@ -256,17 +268,20 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
     }
 
+    //executed when one date is selected, triggers search by date
     public void setStartDate(String date){
         this.startDate = date;
         searchByDate(date);
         btnDateFilterEnd.setEnabled(true);
     }
 
+    //executed when two dates are selected, triggers search by between two dates
     public void setEndDate(String endDate){
         this.endDate = endDate;
         searchBetweenDates(startDate, endDate);
     }
 
+    //clears variables used for date selection and resets user interface
     public void clearDate(){
         btnDateFilterEnd.setText("Date End?");
         btnDateFilterStart.setText("Date Start?");
@@ -280,12 +295,15 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         resultDate = null;
     }
 
+    //displays the custom date picker dialog on screen, use of depracated methods required to work from a fragment
     public void dateShowDialog(){
         DialogFragment datePicker = new CustomDatePicker();
         datePicker.setTargetFragment(this, 0);
         datePicker.show(getFragmentManager(), "Date Dialog");
     }
 
+    //executing when a date is selected from datepicker dialog
+    //checks if start date is filled first before allowing for the end date to be entered
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -305,9 +323,17 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         }
     }
 
+    //used on start up and reset to get the latest readings and resets the listview accordingly
     public void getReadings(View v){
         XmlParser xp = new XmlParser();
         result = xp.getXML();
+
+        try{
+            Reading test = result.get(0);
+        }
+        catch (Exception e){
+            Toast.makeText(v.getContext(),"Failed to fetch", Toast.LENGTH_SHORT).show();
+        }
 
         CustomAdapter AA = new CustomAdapter(v.getContext(), android.R.layout.simple_list_item_1, result);
         AA.notifyDataSetChanged();
@@ -315,16 +341,19 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         readingList.setAdapter( AA );
     }
 
+    //used for recurrrive fetch to passively get reading updates
     public void getReadingUpdates(){
         XmlParser xp = new XmlParser();
         List<Reading> newList = xp.getXML();
 
-        if(newList.containsAll(result)){
+        if(!result.containsAll(newList)){
             result = new ArrayList<Reading>();
             result.addAll(newList);
         }
     }
 
+    //if result date is not null result date is used, if it is result is used
+    //gets the specified reading according by position from listview
     public void getReading(int pos, View v){
         List<Reading> usedList;
 
@@ -343,6 +372,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         startActivity(intent);
     }
 
+    //if result date is not null result date is used, if it is result is used
+    //sort reading enties by magnitude in decending order
     public void sortMagnitude(View v){
 
         List<Reading> usedList;
@@ -376,6 +407,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         readingList.setAdapter( AA );
     }
 
+    //if result date is not null result date is used, if it is result is used
+    //sorts reading enties according by depth in decending order
     public void sortDeepest(View v){
 
         List<Reading> usedList;
@@ -409,6 +442,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         readingList.setAdapter( AA );
     }
 
+    //if result date is not null result date is used, if it is result is used
+    //sorts reading enties according by depth in accending order
     public void sortShallowest(View v){
 
         List<Reading> usedList;
@@ -442,6 +477,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         readingList.setAdapter( AA );
     }
 
+    //fills the resultdate list with result list entries
+    //resultdate is then filtered for entries that match the defined date
     public void searchByDate(String date){
         try{
             List<Reading> listremove = new ArrayList<Reading>();
@@ -476,6 +513,8 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         //Monday, March 22, 2021
     }
 
+    //fills the resultdate list with result list entries
+    //resultdate is then filtered for dates that are outside the defined confines for removal
     public void searchBetweenDates(String dateS, String dateE){
         try{
             List<Reading> listremove = new ArrayList<Reading>();
@@ -515,6 +554,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         //Monday, March 22, 2021
     }
 
+    //method used to parse the resulting date from the date picker dialog into something similar with Reading date
     public String parseDate(String in) {
         try{
             DateFormat originalFormat = new SimpleDateFormat("E, MMMM dd, yyyy", Locale.ENGLISH);

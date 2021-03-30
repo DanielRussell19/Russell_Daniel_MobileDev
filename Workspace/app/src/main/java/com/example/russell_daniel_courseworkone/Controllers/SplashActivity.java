@@ -12,6 +12,7 @@ import com.example.russell_daniel_courseworkone.R;
 //Controller used to handle SplashScreen activity
 public class SplashActivity extends AppCompatActivity {
 
+    //variables
     private long time = 3000l;
 
     @Override
@@ -19,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        //displays a slash screen for 3 seconds before switching to main activity
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {

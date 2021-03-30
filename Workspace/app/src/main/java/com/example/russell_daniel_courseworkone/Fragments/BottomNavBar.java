@@ -15,9 +15,10 @@ import com.example.russell_daniel_courseworkone.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 //Daniel Russell S1707149
-//Class used to execute the Threaded Task as a new thread
+//Class used to define fragment bottom nav bar
 public class BottomNavBar extends Fragment implements View.OnClickListener {
 
+    //variables
     private BottomNavigationView NavBar;
     private View pgListing;
     private View pgMap;
@@ -35,12 +36,15 @@ public class BottomNavBar extends Fragment implements View.OnClickListener {
         pgListing = (View) v.findViewById(R.id.pgListing);
         pgMap = (View) v.findViewById(R.id.pgMap);
 
+        //Attempt at fixing the icon hightlights for bottom nav bar, wrong icon is hightlighted regardless likely due to modular approach via fragments
         switch( getActivity().getLocalClassName() ){
             case "Controllers.MainActivity": pgListing.setEnabled(false); pgMap.setEnabled(true); break;
             case "Controllers.MapActivity": pgListing.setEnabled(true); pgMap.setEnabled(false); break;
             default: pgListing.setEnabled(true); pgMap.setEnabled(true); break;
         }
 
+        //if map icon is selected by user, new mapactivity is created
+        //if listing icon is selected by user, new listing activity is created
         NavBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

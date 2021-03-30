@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Daniel Russell S1707149
-//The all in one method for getting the XML, parsing and processing the required fields into objects to be retrieved via getResult
+//The all in one method for getting the XML, parsing and processing the required fields into objects to be retrieved via getResult below
 public class ThreadedTask extends Thread
 {
     private List<Reading> result; //output result of XML processed into Reading objects
@@ -24,12 +24,13 @@ public class ThreadedTask extends Thread
     @Override
     public void run() {
         try {
+            //defines inputstream using the defined url.
             URL url = new URL("http://quakes.bgs.ac.uk/feeds/MhSeismology.xml");
             URLConnection conn = url.openConnection();
             InputStream input = conn.getInputStream();
 
             List temp = new ArrayList<String>(); //temp arraylist to handle raw data
-            result = new ArrayList<Reading>();
+            result = new ArrayList<Reading>(); //arraylist used to handle the end processed data
 
             XmlPullParserFactory xpFactory = XmlPullParserFactory.newInstance();
             xpFactory.setNamespaceAware(true);
@@ -39,6 +40,7 @@ public class ThreadedTask extends Thread
             int eType = xpParser.getEventType();
 
             //Raw XML Processing stage
+            //systematiclly scans xml for desired tags
             while (eType != XmlPullParser.END_DOCUMENT) {
                 if (eType == XmlPullParser.START_TAG) {
                     switch (xpParser.getName()) {
@@ -54,10 +56,15 @@ public class ThreadedTask extends Thread
                 eType = xpParser.next();
             }
 
+            //temp variables for loop
             Reading reading = new Reading();
             int propCount = 0;
 
             //Acquired XML processed into Reading objects following the predicable pattern of 7 properties each
+            //assuming the above raw processing stage survived without error and no lines skipped or miswritten from url
+
+            //loop starts on 5 due to the xml including unnecessary introductory data that upsets the processing stage
+            //varaibles are systematiclly added to a new reading entity till the prop limit is reached an a new entity is made to add
            for (int i = 5; i < temp.size(); i++) {
                     if(propCount > 6){
                         result.add(reading);
@@ -81,7 +88,7 @@ public class ThreadedTask extends Thread
                propCount++;
             }
 
-           //checks for any forgotten input Readings
+           //checks for any forgotten input Readings by checking the last possible raw piece of data, which is usally the final reading in the xml data
            if(reading.getLon() != null){
                reading.extractMagnitude();
                reading.extractDepth();
@@ -89,13 +96,21 @@ public class ThreadedTask extends Thread
                reading = null;
            }
 
-           //notify block using lock object to tell thread in mainactivity to wakeup
+           //notify block using lock object to tell thread to wakeup
            synchronized (lock){
                lock.notify();
            }
 
         } catch (IOException | XmlPullParserException e) {
             Log.println(Log.ERROR, "GetInputStreamThread", e.toString());
+
+            //an improvised error handling solution, to enable listing, detailed reading and map to function without crashing
+            //checks are in place to ensure null data is handled correctly in controller and fragment classes
+            result = new ArrayList<Reading>();
+
+            synchronized (lock){
+                lock.notify();
+            }
         }
     }
 }

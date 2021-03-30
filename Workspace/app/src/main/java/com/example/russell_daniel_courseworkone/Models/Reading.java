@@ -9,6 +9,7 @@ import java.util.Locale;
 
 //Daniel Russell S1707149
 //Class used to define Reading objects
+//Two functions toward the bottom extract additional variables for all reading objects
 public class Reading implements Serializable {
     private String title, description, link, pubdate, category,lat,lon, depth, magnitude;
     public String getTitle() {
@@ -75,11 +76,13 @@ public class Reading implements Serializable {
         this.lon = lon;
     }
 
+    //extracts depth from description
     public void extractDepth(){
         String t = getDescription().substring(getDescription().indexOf("Depth:") + 7, getDescription().indexOf("km") - 1);
         setDepth(t);
     }
 
+    //extracts magnitude from description
     public void extractMagnitude(){
         String t = getDescription().substring(getDescription().indexOf("Magnitude:") + 10, getDescription().length());
         setMagnitude(t);

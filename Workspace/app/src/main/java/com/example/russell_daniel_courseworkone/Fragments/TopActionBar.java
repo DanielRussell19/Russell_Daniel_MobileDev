@@ -12,9 +12,10 @@ import androidx.fragment.app.Fragment;
 import com.example.russell_daniel_courseworkone.R;
 
 //Daniel Russell S1707149
-//Class used to execute the Threaded Task as a new thread
+//Class used to defined fragment topactionbar
 public class TopActionBar extends Fragment implements View.OnClickListener {
 
+    //variables
     private Toolbar NavBar;
 
     @Override
@@ -23,7 +24,7 @@ public class TopActionBar extends Fragment implements View.OnClickListener {
             Bundle savedInstanceState
     )
     {
-        // Inflate the layout for this fragment
+        //uses layout fragment action bar
         View v = inflater.inflate(R.layout.fragment_actionbar, container, false);
         NavBar = (Toolbar) v.findViewById(R.id.top_navigation);
 

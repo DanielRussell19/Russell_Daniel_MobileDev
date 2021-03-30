@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.example.russell_daniel_courseworkone.Models.Reading;
 import com.example.russell_daniel_courseworkone.R;
 
+//Daniel Russell S1707149
+//Class used to define fragment reading display
 public class ReadingDisplay extends Fragment {
 
+    //variables
     private Reading reading;
     private TextView txtTitle;
     private TextView txtDescription;
@@ -44,17 +49,25 @@ public class ReadingDisplay extends Fragment {
         txtUrl = (TextView) v.findViewById(R.id.txtUrl);
         txtCategory = (TextView) v.findViewById(R.id.txtCategory);
 
-        txtTitle.setText(reading.getTitle());
-        txtDescription.setText(reading.getDescription());
-        txtPubDate.setText(reading.getPubdate());
-        txtMag.setText("Magnitude: " + reading.getMagnitude());
-        txtDepth.setText("Depth: " + reading.getDepth());
-        txtLat.setText("Lat: " + reading.getLat());
-        txtLon.setText("Long: " + reading.getLon());
-        txtCategory.setText("Category: " + reading.getCategory());
+        //if reading fetch fails, toast is activated like map activity, etc
+        try {
+            txtTitle.setText(reading.getTitle());
+            txtDescription.setText(reading.getDescription());
+            txtPubDate.setText(reading.getPubdate());
+            txtMag.setText("Magnitude: " + reading.getMagnitude());
+            txtDepth.setText("Depth: " + reading.getDepth());
+            txtLat.setText("Lat: " + reading.getLat());
+            txtLon.setText("Long: " + reading.getLon());
+            txtCategory.setText("Category: " + reading.getCategory());
 
-        txtUrl.setText(Html.fromHtml("<a href=" + reading.getLink() + ">Source</a> "));
-        txtUrl.setMovementMethod(LinkMovementMethod.getInstance());
+            //txtUrl.setText(Html.fromHtml("<a href=" + reading.getLink() + ">Source</a> "));
+            //txtUrl.setMovementMethod(LinkMovementMethod.getInstance());
+
+            txtUrl.setText("Source: " + reading.getLink());
+        }
+        catch(Exception e){
+            Toast.makeText(this.getActivity(),"Failed to fetch", Toast.LENGTH_SHORT).show();
+        }
 
         return v;
     }
