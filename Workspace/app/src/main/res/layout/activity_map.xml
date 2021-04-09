@@ -5,7 +5,7 @@ Layout used to define map activity portrait-->
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controllers.MapActivity">
+    tools:context=".Controllers.MapActivity"><!--DR-->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -25,4 +25,4 @@ Layout used to define map activity portrait-->
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </RelativeLayout>
-</FrameLayout>
+</FrameLayout><!--DR-->

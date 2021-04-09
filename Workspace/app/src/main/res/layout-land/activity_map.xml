@@ -13,7 +13,7 @@ Layout used to define map activity landscape -->
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/map_con">
-    </FrameLayout>
+    </FrameLayout><!--DR-->
 
     <RelativeLayout
         android:id="@+id/fragBotNav"

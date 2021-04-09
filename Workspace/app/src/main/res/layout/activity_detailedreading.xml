@@ -22,4 +22,4 @@ Layout used to define detailed reading in portrait-->
         android:layout_height="wrap_content">
     </RelativeLayout>
 
-</LinearLayout>
+</LinearLayout><!--DR-->

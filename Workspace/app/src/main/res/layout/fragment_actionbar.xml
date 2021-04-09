@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--DR-->
 <!-- Daniel Russell S1707149
 Layout used to define top action bar -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,7 +6,7 @@ Layout used to define top action bar -->
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <!--DR--><androidx.appcompat.widget.Toolbar
         android:id="@+id/top_navigation"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -15,4 +15,4 @@ Layout used to define top action bar -->
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-</LinearLayout>
+</LinearLayout><!--DR-->

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
             transactionC.replace(R.id.fragBotNav, FragBotNavBar);
             transactionC.commit();
-        } else {
+        } else { //Daniel Russell S1707149
             FragmentManager manageListing = getSupportFragmentManager();
             FragmentTransaction transactionA = manageListing.beginTransaction();
             transactionA.replace(R.id.fragReadListing, FragReadingListing);

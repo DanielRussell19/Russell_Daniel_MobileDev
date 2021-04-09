@@ -61,7 +61,7 @@ public class ReadingDisplay extends Fragment {
             txtCategory.setText("Category: " + reading.getCategory());
 
             //txtUrl.setText(Html.fromHtml("<a href=" + reading.getLink() + ">Source</a> "));
-            //txtUrl.setMovementMethod(LinkMovementMethod.getInstance());
+            //txtUrl.setMovementMethod(LinkMovementMethod.getInstance());//<S1707149>
 
             txtUrl.setText("Source: " + reading.getLink());
         }

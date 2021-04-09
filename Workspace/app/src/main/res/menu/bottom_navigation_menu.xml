@@ -10,10 +10,11 @@ Layout used to define bottom nav bar -->
         android:id="@+id/pgListing"
         android:enabled="true"
         android:title="Listing"
-        android:icon="@drawable/ic_listing"/>
+        android:icon="@drawable/ic_listing"/><!--DR-->
     <item
         android:id="@+id/pgMap"
         android:enabled="true"
         android:title="Map"
         android:icon="@drawable/ic_map"/>
+    <!--DR-->
 </menu>

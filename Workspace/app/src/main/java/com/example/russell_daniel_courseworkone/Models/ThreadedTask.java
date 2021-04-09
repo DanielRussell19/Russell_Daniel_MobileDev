@@ -7,6 +7,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+//import java.util.List<S1707149>
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ThreadedTask extends Thread
             URLConnection conn = url.openConnection();
             InputStream input = conn.getInputStream();
 
-            List temp = new ArrayList<String>(); //temp arraylist to handle raw data
+            List temp = new ArrayList<String>(); //temp arraylist to handle raw data //Daniel Russell S1707149
             result = new ArrayList<Reading>(); //arraylist used to handle the end processed data
 
             XmlPullParserFactory xpFactory = XmlPullParserFactory.newInstance();
@@ -52,7 +53,7 @@ public class ThreadedTask extends Thread
                         case "lat":  temp.add(xpParser.nextText()); break;
                         case "long": temp.add(xpParser.nextText()); break;
                     }
-                }
+                } //Daniel Russell S1707149
                 eType = xpParser.next();
             }
 
@@ -86,7 +87,7 @@ public class ThreadedTask extends Thread
                        }
                     }
                propCount++;
-            }
+            } //Daniel Russell S1707149
 
            //checks for any forgotten input Readings by checking the last possible raw piece of data, which is usally the final reading in the xml data
            if(reading.getLon() != null){
@@ -103,7 +104,7 @@ public class ThreadedTask extends Thread
 
         } catch (IOException | XmlPullParserException e) {
             Log.println(Log.ERROR, "GetInputStreamThread", e.toString());
-
+            //Daniel Russell S1707149
             //an improvised error handling solution, to enable listing, detailed reading and map to function without crashing
             //checks are in place to ensure null data is handled correctly in controller and fragment classes
             result = new ArrayList<Reading>();

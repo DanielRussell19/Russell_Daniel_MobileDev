@@ -48,7 +48,7 @@ import java.util.concurrent.Future;
 //Class used to execute the Threaded Task as a new thread
 
 //possibly unnessesary amount of implements but wouldn't work otherwise
-public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
+public class ReadingListing extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener { //Daniel Russell S1707149
 
     //variables
     private Handler h = new Handler();
@@ -94,7 +94,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
         btnDirectionFilter.setOnItemSelectedListener(this);
         String directions[] = {"None","North", "West", "East", "South"};
-        ArrayAdapter<String> aaD = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_spinner_item, directions);
+        ArrayAdapter<String> aaD = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_spinner_item, directions); //Daniel Russell S1707149
         btnDirectionFilter.setAdapter(aaD);
 
         rbNone.setOnClickListener(this);
@@ -141,14 +141,14 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         h.post(recursiveFetch);
     }
 
-    //if a list item is selected such as on the listview for which this is assigned to the corrosponding position is used to
+    //if a list item is selected such as on the listview for which this is assigned to the corrosponding position is used to //Daniel Russell S1707149
     //get that specific reading to view in detail
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         getReading(position, view);
     }
 
-    //if list item selected method is executed, used to sort by direction using either dateresult(if not null) or result
+    //if list item selected method is executed, used to sort by direction using either dateresult(if not null) or result //Daniel Russell S1707149
     @Override
     public void onItemSelected(AdapterView<?> p, View v, int pos, long id) {
 
@@ -176,7 +176,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                     Reading target = usedList.get(i);
                     int in = i - 1;
 
-                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLat()) < Double.parseDouble(target.getLat()) ){
+                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLat()) < Double.parseDouble(target.getLat()) ){ //Daniel Russell S1707149
                         usedList.set(in + 1, usedList.get(in));
                         in = in - 1;
                     }
@@ -195,7 +195,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                     Reading target = usedList.get(i);
                     int in = i - 1;
 
-                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLon()) < Double.parseDouble(target.getLon()) ){
+                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLon()) < Double.parseDouble(target.getLon()) ){ //Daniel Russell S1707149
                         usedList.set(in + 1, usedList.get(in));
                         in = in - 1;
                     }
@@ -233,7 +233,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
                     Reading target = usedList.get(i);
                     int in = i - 1;
 
-                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLon()) > Double.parseDouble(target.getLon()) ){
+                    while( in >= 0 && Double.parseDouble(usedList.get(in).getLon()) > Double.parseDouble(target.getLon()) ){ //Daniel Russell S1707149
                         usedList.set(in + 1, usedList.get(in));
                         in = in - 1;
                     }
@@ -260,10 +260,10 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
             case R.id.rbNone: clearDate(); btnDirectionFilter.setSelection(0); rgSorts.clearCheck(); getReadings(v); break;
             case R.id.rbMag: sortMagnitude(v); break;
             case R.id.rbDepthA: sortShallowest(v); break;
-            case R.id.rbDepthD: sortDeepest(v); break;
+            case R.id.rbDepthD: sortDeepest(v); break;//S1707149
             case R.id.btnDateFilterStart: dateShowDialog(); break;
             case R.id.btnDateFilterEnd: dateShowDialog(); break;
-            case R.id.btnDateFilterClear: clearDate(); btnDirectionFilter.setSelection(0); rgSorts.clearCheck(); getReadings(v); break;
+            case R.id.btnDateFilterClear: clearDate(); btnDirectionFilter.setSelection(0); rgSorts.clearCheck(); getReadings(v); break; //Daniel Russell S1707149
         }
 
     }
@@ -275,7 +275,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         btnDateFilterEnd.setEnabled(true);
     }
 
-    //executed when two dates are selected, triggers search by between two dates
+    //executed when two dates are selected, triggers search by between two dates//S1707149
     public void setEndDate(String endDate){
         this.endDate = endDate;
         searchBetweenDates(startDate, endDate);
@@ -295,11 +295,11 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         resultDate = null;
     }
 
-    //displays the custom date picker dialog on screen, use of depracated methods required to work from a fragment
+    //displays the custom date picker dialog on screen, use of depracated methods required to work from a fragment //Daniel Russell S1707149
     public void dateShowDialog(){
         DialogFragment datePicker = new CustomDatePicker();
         datePicker.setTargetFragment(this, 0);
-        datePicker.show(getFragmentManager(), "Date Dialog");
+        datePicker.show(getFragmentManager(), "Date Dialog" /*S1707149*/);
     }
 
     //executing when a date is selected from datepicker dialog
@@ -394,7 +394,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
             Reading target = usedList.get(i);
             int in = i - 1;
 
-            while( in >= 0 && Double.parseDouble(usedList.get(in).getMagnitude()) < Double.parseDouble(target.getMagnitude()) ){
+            while( in >= 0 && Double.parseDouble(usedList.get(in).getMagnitude()) < Double.parseDouble(target.getMagnitude()) ){ //Daniel Russell S1707149
                 usedList.set(in + 1, usedList.get(in));
                 in = in - 1;
             }
@@ -429,7 +429,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
             Reading target = usedList.get(i);
             int in = i - 1;
 
-            while( in >= 0 && Integer.parseInt(usedList.get(in).getDepth()) < Integer.parseInt(target.getDepth()) ){
+            while( in >= 0 && Integer.parseInt(usedList.get(in).getDepth()) < Integer.parseInt(target.getDepth()) ){ //Daniel Russell S1707149
                 usedList.set(in + 1, usedList.get(in));
                 in = in - 1;
             }
@@ -473,7 +473,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         }
 
         AA.notifyDataSetChanged();
-
+        //Daniel Russell S1707149
         readingList.setAdapter( AA );
     }
 
@@ -510,7 +510,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
         }
 
         //tue, 16 mar 2021, time
-        //Monday, March 22, 2021
+        //Monday, March 22, 2021//Daniel Russell S1707149
     }
 
     //fills the resultdate list with result list entries
@@ -540,7 +540,7 @@ public class ReadingListing extends Fragment implements AdapterView.OnItemClickL
 
             resultDate.removeAll(listremove);
 
-            CustomAdapter AA = new CustomAdapter(getView().getContext(), android.R.layout.simple_list_item_1, resultDate);
+            CustomAdapter AA = new CustomAdapter(getView().getContext(), android.R.layout.simple_list_item_1, resultDate);//Daniel Russell S1707149
             AA.notifyDataSetChanged();
 
             readingList.setAdapter( AA );

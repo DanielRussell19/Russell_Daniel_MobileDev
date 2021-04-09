@@ -78,13 +78,13 @@ public class Reading implements Serializable {
 
     //extracts depth from description
     public void extractDepth(){
-        String t = getDescription().substring(getDescription().indexOf("Depth:") + 7, getDescription().indexOf("km") - 1);
+        String t = getDescription().substring(getDescription().indexOf("Depth:") + 7, getDescription().indexOf("km") - 1); //Daniel Russell S1707149
         setDepth(t);
     }
 
     //extracts magnitude from description
     public void extractMagnitude(){
-        String t = getDescription().substring(getDescription().indexOf("Magnitude:") + 10, getDescription().length());
+        String t = getDescription().substring(getDescription().indexOf("Magnitude:") + 10, getDescription().length()); //Daniel Russell S1707149
         setMagnitude(t);
     }
 }

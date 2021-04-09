@@ -21,7 +21,7 @@ public class DetailedReadingActivity extends AppCompatActivity {
     private ReadingDisplay FragReadDisplay; // defines fragreaddisplay using the reading display fragment class
     private Reading reading;
 
-    @Override
+    @Override //Daniel Russell S1707149
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailedreading);
@@ -46,7 +46,7 @@ public class DetailedReadingActivity extends AppCompatActivity {
             transactionC.replace(R.id.fragBotNav, FragBotNavBar);
             transactionC.commit();
         }
-        else
+        else //Daniel Russell S1707149
         {
             //Commits fragments to display their corresponding views into the layout of detailed reading
             FragmentManager manageNavBar = getSupportFragmentManager();
@@ -63,6 +63,7 @@ public class DetailedReadingActivity extends AppCompatActivity {
             FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
             transactionC.replace(R.id.fragBotNav, FragBotNavBar);
             transactionC.commit();
+            //Daniel Russell S1707149
         }
     }
 }

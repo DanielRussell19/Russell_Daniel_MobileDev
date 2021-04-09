@@ -5,7 +5,7 @@ Layout used to define reading map -->
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-
+    <!--DR-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

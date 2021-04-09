@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.example.russell_daniel_courseworkone.R;
 import java.util.ArrayList;
 import java.util.List;
+//import java.util.List<S1707149>
 
 //Daniel Russell S1707149
 //Class used to define a custom adapter for listing of readings, custom details are best examplified in get view
@@ -28,7 +29,7 @@ public class CustomAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v;
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);//Daniel Russell S1707149
 
         //uses androids default list item to inflate list
         v = inflater.inflate(android.R.layout.simple_list_item_1, null);
@@ -60,7 +61,7 @@ public class CustomAdapter extends ArrayAdapter {
 
         return v;
     }
-
+    //Daniel Russell S1707149
     @Override
     public int getCount() {
         return super.getCount();

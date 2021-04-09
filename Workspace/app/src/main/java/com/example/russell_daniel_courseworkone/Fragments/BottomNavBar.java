@@ -29,7 +29,7 @@ public class BottomNavBar extends Fragment implements View.OnClickListener {
             Bundle savedInstanceState
     )
     {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment//<S1707149>
         View v = inflater.inflate(R.layout.fragment_bottom_navigation, container, false);
         NavBar = (BottomNavigationView) v.findViewById(R.id.bottom_navigation);
 
@@ -45,7 +45,7 @@ public class BottomNavBar extends Fragment implements View.OnClickListener {
 
         //if map icon is selected by user, new mapactivity is created
         //if listing icon is selected by user, new listing activity is created
-        NavBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        NavBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() { //<S1707149>
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -56,7 +56,7 @@ public class BottomNavBar extends Fragment implements View.OnClickListener {
                         break;
                     case R.id.pgMap:
                         Intent Intent2 = new Intent(v.getContext(), MapActivity.class);
-                        getActivity().finish();
+                        getActivity().finish();//<S1707149>
                         startActivity(Intent2);
                         break;
                 }
@@ -69,11 +69,11 @@ public class BottomNavBar extends Fragment implements View.OnClickListener {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
-        super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view,/*<S1707149>*/ savedInstanceState);
     }
 
     @Override
     public void onClick(View v) {
-
+        //<S1707149>
     }
 }

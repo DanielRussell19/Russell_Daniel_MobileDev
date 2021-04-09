@@ -13,7 +13,7 @@ Layout used to define main in portrait -->
     <FrameLayout
         android:id="@+id/fragNavBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" /><!--DR-->
 
     <FrameLayout
         android:id="@+id/fragReadListing"
@@ -24,6 +24,6 @@ Layout used to define main in portrait -->
         android:id="@+id/fragBotNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </RelativeLayout>
+    </RelativeLayout><!--DR-->
 
 </LinearLayout>

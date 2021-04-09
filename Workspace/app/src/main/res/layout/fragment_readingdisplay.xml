@@ -10,7 +10,7 @@ Layout used to define reading display in portait and landscape -->
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:textAlignment="center"/>
+        android:textAlignment="center"/><!--DR-->
 
     <TextView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@ Layout used to define reading display in portait and landscape -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtDescription"/>
+        android:id="@+id/txtDescription"/><!--DR-->
 
     <TextView
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@ Layout used to define reading display in portait and landscape -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtPubDate"/>
+        android:id="@+id/txtPubDate"/><!--DR-->
 
     <TextView
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@ Layout used to define reading display in portait and landscape -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtMag"/>
+        android:id="@+id/txtMag"/><!--DR-->
 
     <TextView
         android:layout_width="match_parent"
@@ -73,6 +73,6 @@ Layout used to define reading display in portait and landscape -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtUrl"/>
+        android:id="@+id/txtUrl"/><!--DR-->
 
 </LinearLayout>

@@ -24,7 +24,7 @@ public class XmlParser
 
                 tsk.start(); //Starts the method responsible for getting the XML and parsing on a separate thread
 
-                if(tsk.isAlive()){ //while the tsk is alive it'll trigger lock.wait to wait for a response from tsk
+                if(tsk.isAlive()){ //while the tsk is alive it'll trigger lock.wait to wait for a response from tsk //Daniel Russell S1707149
                     lock.wait();
                 } //upon retrieval of notify from tsk, thread wakes up the current thread to continue execution
 

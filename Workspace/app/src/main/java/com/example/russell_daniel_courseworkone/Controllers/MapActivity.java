@@ -3,7 +3,7 @@ package com.example.russell_daniel_courseworkone.Controllers;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
-
+//import java.util.List<S1707149>
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,6 +16,7 @@ import com.example.russell_daniel_courseworkone.R;
 import java.util.List;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+//import java.util.List<S1707149>
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -42,16 +43,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         FragNavBar = new TopActionBar();
 
         //If the app is in landscape the top action bar is removed to save space for the remaining views
-        //if the app is in portrait the top action is preserved as there is save for the top action bar to display neatly
+        //if the app is in portrait the top action is preserved as there is save for the top action bar to display neatly//<S1707149>
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
         {
             FragmentManager manageBotNavBar = getSupportFragmentManager();
             FragmentTransaction transactionC = manageBotNavBar.beginTransaction();
             transactionC.replace(R.id.fragBotNav, FragBotNavBar);
-            transactionC.commit();
+            transactionC.commit();//<S1707149>
 
             SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().add(R.id.map_con, mapFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.map_con, mapFragment).commit();//<S1707149>
             mapFragment.getMapAsync(this);
         }
         else{
@@ -95,7 +96,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if (tempMag <= 1.0) {
                     mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                 } else if (tempMag > 2.0) {
-                    mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                    mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));//<S1707149>
                 } else if (tempMag > 1.0) {
                     mMap.addMarker(new MarkerOptions().position(pos).title(x.getTitle()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
                 }
@@ -107,9 +108,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.getUiSettings().setAllGesturesEnabled(true);
 
             //defaults the camera onto the uk based on the first earthquake reading recived
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Double.parseDouble(readings.get(0).getLat()), Double.parseDouble(readings.get(0).getLon()))));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Double.parseDouble(readings.get(0).getLat()), Double.parseDouble(readings.get(0).getLon(/*<S1707149>*/)))));
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(),"Failed to fetch", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Failed to fetch", Toast.LENGTH_SHORT).show();//<S1707149>
         }
     }
 }

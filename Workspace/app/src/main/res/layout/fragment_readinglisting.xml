@@ -5,12 +5,12 @@ Layout used to define reading listing for portrait -->
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"><!--DR-->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Russell_Daniel_Coursework_Two"
+        android:text="Russell_Daniel_Coursework_S1707149"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -24,9 +24,9 @@ Layout used to define reading listing for portrait -->
         android:id="@+id/list"
         android:orientation="vertical"
         android:divider="#000"
-        android:dividerHeight="2dp" />
+        android:dividerHeight="2dp" /><!--DR-->
 
-    <TextView
+    <!--DR--><TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sort?"
@@ -58,7 +58,7 @@ Layout used to define reading listing for portrait -->
             android:id="@+id/rbDepthD"></RadioButton>
     </RadioGroup>
 
-    <Spinner
+    <!--DR--><Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Directional Sort"
@@ -73,7 +73,7 @@ Layout used to define reading listing for portrait -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"><!--DR-->
 
         <Button
             android:layout_width="wrap_content"
@@ -92,7 +92,7 @@ Layout used to define reading listing for portrait -->
             android:layout_height="wrap_content"
             android:text="Clear"
             android:id="@+id/btnDateFilterClear" />
-    </LinearLayout>
+    </LinearLayout><!--DR-->
 
 
 </LinearLayout>
